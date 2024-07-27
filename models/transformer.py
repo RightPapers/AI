@@ -3,9 +3,9 @@ import torch.nn as nn
 from common.layers import TransformerEncoder, AttentionMechanism
     
 # Transformer Encoder Model
-class BD_Transformers(nn.Module):
+class BD_Transformer(nn.Module):
     def __init__(self, text_config):
-        super(BD_Transformers, self).__init__()
+        super(BD_Transformer, self).__init__()
         self.text_model = TransformerEncoder(text_config)
         self.attention = AttentionMechanism(text_config.hidden_size, 512)
         self.additional_layer = nn.Sequential(
