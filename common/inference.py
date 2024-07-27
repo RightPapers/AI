@@ -29,22 +29,20 @@ def model_inference(url, bert=True):
     if bert:
         model_checkpoint = 'klue/roberta-large'
         model_path = ''
-        tokenizer = AutoTokenizer.from_pretrained(model_checkpoint) # 토크나이저
         model = BD_Roberta(model_checkpoint) # 모델
         model.load_state_dict(torch.load(model_path)) # 파라미터 덮어쓰기
     else:
         model_checkpoint = 'klue/roberta-small'
         model_path = ''
-        tokenizer = AutoTokenizer.from_pretrained(model_checkpoint) # 토크나이저
         text_config = AutoConfig.from_pretrained(model_checkpoint) # 모델 설정
         model = BD_Transformer(text_config) # 모델
         model.load_state_dict(torch.load(model_path)) # 파라미터 덮어쓰기
     
     model.to(device)
     
-    inputs = tokenizer(caption, padding=True, truncation=True, return_tensors="pt")
-    input_ids = inputs["input_ids"].to(device) # 정수 매핑
-    attention_mask = inputs["attention_mask"].to(device) # 어텐션 마스크
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint) # 토크나이저
+    inputs = tokenizer(caption, padding=True, truncation=True, return_tensors="pt") # 토큰화, 정수 매핑, 패딩
+    input_ids, attention_mask = inputs["input_ids"].to(device), inputs["attention_mask"].to(device)
     
     # 모델 추론
     model.eval()
