@@ -1,7 +1,7 @@
 # coding: utf-8
 import torch
 import torch.nn as nn
-import torch.functional as F
+import torch.nn.functional as F
 from math import sqrt
 
 # Scaled Dot-Product Attention
