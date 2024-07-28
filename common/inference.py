@@ -9,7 +9,7 @@ from models.transformer import BD_Transformer
 from models.roberta import BD_Roberta
 
 
-def model_inference(url, bert=True):
+def model_inference(url, transformer=True):
     '''
     모델을 불러와서 새로운 영상에 대해서 Inference를 수행하는 함수
     
@@ -26,18 +26,18 @@ def model_inference(url, bert=True):
     
     caption = YouTubeCaptionCrawler(url).get_caption() # 영상의 자막을 크롤링
     
-    if bert:
-        model_checkpoint = 'klue/roberta-large'
-        model_path = ''
-        model = BD_Roberta(model_checkpoint) # 모델
-        model.load_state_dict(torch.load(model_path)) # 파라미터 덮어쓰기
-    else:
+    if transformer:
         model_checkpoint = 'klue/roberta-small'
         model_path = ''
         text_config = AutoConfig.from_pretrained(model_checkpoint) # 모델 설정
         model = BD_Transformer(text_config) # 모델
         model.load_state_dict(torch.load(model_path)) # 파라미터 덮어쓰기
-    
+    else:        
+        model_checkpoint = 'klue/roberta-large'
+        model_path = ''
+        model = BD_Roberta(model_checkpoint) # 모델
+        model.load_state_dict(torch.load(model_path)) # 파라미터 덮어쓰기
+        
     model.to(device)
     
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint) # 토크나이저
