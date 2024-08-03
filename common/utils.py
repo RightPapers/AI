@@ -118,7 +118,7 @@ class YouTubeCaptionCrawler:
         start: 자막 시작 시간 (Ex: 00:00)
         end: 자막 끝 시간 (Ex: 00:00)
     '''
-    def __init__(self, url, api_key, start=None, end=None):
+    def __init__(self, url, start=None, end=None):
         self.url = url
         self.ending_markers = ['는다', '니다', '는구나', '구나', '데요', 
                                '네요', '러요', '냐고', '아요', '어요', 
@@ -127,7 +127,7 @@ class YouTubeCaptionCrawler:
                                '였어요', '였네요', '시다', '이다', '이야',
                                '이죠', '겠죠', '나요', '려나', '려고',
                                '가죠', '나다', '라고', '라니', '라네']
-        self.api_key = api_key
+        self.api_key = my_keys('youtube')
         self.text = ""
         
         # 시간 지정이 있을 경우
@@ -262,8 +262,8 @@ class YouTubeDataFetcher:
     Args:
         api_key: 유튜브 API 키
     '''
-    def __init__(self, api_key):
-        self.api_key = api_key
+    def __init__(self):
+        self.api_key = my_keys('youtube')
         self.youtube = build('youtube', 'v3', developerKey=api_key)
 
     def get_channel_id(self, youtuber_name):
@@ -423,6 +423,20 @@ def vectorize(tokens, vocab_to_idx):
     return x
 
 def baruen_tokenizer(s):
+    '''
+    바른형태소 분석기를 활용한 토크나이저
+    
+    Args:
+        s: 입력 문장
+        
+    Note:
+        바른 형태소 분석기는 별도의 설치가 필요하며, API 키가 필요함
+        다운로드 : https://bareun.ai/download
+        Windows/MAC에서 바른형태소 분석기 활성화 : https://bareun.ai/docs
+        - Window는 설치 후 환경변수 설정 및 윈도우 서비스 활성화 필요
+        - MAC은 설치 후 터미널에서 다음의 명령어 실행, sudo launchctl unload /Library/LaunchAgents/bareun.plist
+    '''
+    
     pos_list = ['NNG', 'NNP', 'NP', 'VV', 'VA', 'MAG', 'MMA', 'MMD', 'MMN', 'XPN', 'XSN', 'XSV', 'XSA']
     API_KEY = my_keys('bareun')
     baruen_tagger = Tagger(API_KEY, 'localhost')
