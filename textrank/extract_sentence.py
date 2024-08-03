@@ -11,7 +11,7 @@ def extract_keysentences(url, topk=20, min_sim=0.3):
     Args:
         url (str): YouTube 영상 URL
         topk (int): 추출할 문장 수
-        min_sim (int) : 문장 유사도 임계값
+        min_sim (float) : 문장 유사도 임계값
     '''
     
     # Fetch captions by YouTubeCaptionCrawler
