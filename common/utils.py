@@ -264,7 +264,7 @@ class YouTubeDataFetcher:
     '''
     def __init__(self):
         self.api_key = my_keys('youtube')
-        self.youtube = build('youtube', 'v3', developerKey=api_key)
+        self.youtube = build('youtube', 'v3', developerKey=self.api_key)
 
     def get_channel_id(self, youtuber_name):
         try:
