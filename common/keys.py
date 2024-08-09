@@ -1,5 +1,5 @@
 # coding: utf-8
-def my_keys(usage='youtube', alternative=False):
+def my_keys(usage='youtube', alter=False):
     '''
     API key를 반환하는 함수
     
@@ -10,7 +10,7 @@ def my_keys(usage='youtube', alternative=False):
     
     if usage == 'youtube':
         key = 'AIzaSyBXRUyGKQAgnHB3O6AO8EEEd6pG9sl7OY4'
-        if alternative:
+        if alter:
             key = 'AIzaSyC4h9FzEi5aStNer8Hc8KASdwxD_FuY_94'
         
     elif usage == 'openai':
@@ -18,6 +18,9 @@ def my_keys(usage='youtube', alternative=False):
         
     elif usage == 'bareun':
         key = "koba-TOE4CCA-76WULKY-WLGME4Y-NOXDU4I"
+        
+    elif usage == 'naver':
+        key = {'client_id': '68RoCmyR17urwap_vvNC', 'client_sever':'WDlfFKv_Qk'}
         
     return key
     
