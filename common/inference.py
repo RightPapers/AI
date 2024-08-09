@@ -15,7 +15,7 @@ def model_inference(url, transformer=True):
     
     Args
         url : 영상 링크
-        bert : 사용할 모델이 RoBERTa인지 여부
+        transformer : 사용할 모델이 transformer인지 여부
     '''
     
     fixSEED(42) # fix seed for reproducibility
