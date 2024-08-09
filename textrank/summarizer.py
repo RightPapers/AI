@@ -1,9 +1,9 @@
 # coding: utf-8
 import numpy as np
 
-from rank import pagerank
-from sentence import sent_graph
-from word import word_graph
+from textrank.rank import pagerank
+from textrank.sentence import sent_graph
+from textrank.word import word_graph
 
 class KeywordSummarizer:
     """
