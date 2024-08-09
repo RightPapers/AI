@@ -1,4 +1,7 @@
 # coding: utf-8
+import os
+import sys
+import urllib.request
 import torch
 import random
 import json
@@ -442,3 +445,63 @@ def baruen_tokenizer(s):
     baruen_tagger = Tagger(API_KEY, 'localhost')
     
     return [token for token, tag in baruen_tagger.pos(s) if tag in pos_list]
+
+
+def get_related_news(query, display='3', start='1', sort='sim'):
+    '''
+    네이버 뉴스 API를 활용하여 관련 뉴스를 가져오는 함수
+    (참고: https://developers.naver.com/docs/serviceapi/search/news/news.md#%EB%89%B4%EC%8A%A4)
+    
+    Args:
+        query: 검색할 키워드
+        display: 가져올 뉴스 개수
+        start: 시작 인덱스
+        sort: 정렬 기준 (sim: 유사도순, date: 날짜순)
+    '''
+    
+    # 네이버 API 키
+    client_id = my_keys('naver')['client_id']
+    client_secret = my_keys('naver')['client_sever']
+    
+    # 검색어 인코딩
+    encText = urllib.parse.quote(query)
+    
+    # API 파라미터
+    url = "https://openapi.naver.com/v1/search/news?query=" + encText + "&display=" + display + "&start=" + start + "&sort=" + sort
+    
+    # API 요청
+    request = urllib.request.Request(url)
+    request.add_header("X-Naver-Client-Id",client_id)
+    request.add_header("X-Naver-Client-Secret",client_secret)
+    
+    # 응답 받기
+    response = urllib.request.urlopen(request)
+    rescode = response.getcode()
+    
+    if(rescode==200):
+        response_body = response.read().decode('utf-8')
+        response_body = response_body.replace('\\/', '/')
+        data = json.loads(response_body)
+        
+        news = data['items']
+        
+        first_dict = {'title':news[0]['title'],
+                      'link':news[0]['originallink'],
+                      'pubDate':news[0]['pubDate'],
+                      'description':news[0]['description']}
+        
+        second_dict = {'title':news[1]['title'],
+                       'link':news[1]['originallink'],
+                       'pubDate':news[1]['pubDate'],
+                       'description':news[1]['description']}
+        
+        third_dict = {'title':news[2]['title'],
+                      'link':news[2]['originallink'],
+                      'pubDate':news[2]['pubDate'],
+                      'description':news[2]['description']}
+        
+        return first_dict, second_dict, third_dict
+    
+    
+    #else:
+    #    print("Error Code:" + rescode)
