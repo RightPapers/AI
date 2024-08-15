@@ -468,7 +468,6 @@ def baruen_noun_tokenizer(s):
     return [token for token, tag in baruen_tagger.pos(s) if tag in pos_list]
     
 
-
 def get_related_news(query, display='3', start='1', sort='sim'):
     '''
     네이버 뉴스 API를 활용하여 관련 뉴스를 가져오는 함수
@@ -524,6 +523,33 @@ def get_related_news(query, display='3', start='1', sort='sim'):
         
         return first_dict, second_dict, third_dict
     
+
+def related_articles(gpt_summary):
+    '''
+    GPT 요약문을 바탕으로 관련 기사를 가져오는 함수
     
-    #else:
-    #    print("Error Code:" + rescode)
+    Args:
+        gpt_summary(str): GPT(VS_GPT)가 생성한 요약문 
+    '''
+    
+    # 요약문 문장 단위 분리 후 첫 문장만 가져오기
+    first_line = gpt_summary.split('. ')[0]
+    
+    # 바른형태소 분석기를 활용한 명사 추출
+    query = baruen_noun_tokenizer(first_line)
+    
+    # 추출한 명사를 바탕으로 쿼리 생성
+    query = ' '.join(query[:5])
+    
+    # 생성한 쿼리로 관련 뉴스 가져오기
+    first_news, second_news, third_news = get_related_news(query)
+    
+    # 사전 형태로 저장
+    news = {
+        'query': query,
+        'first_news': first_news,
+        'second_news': second_news,
+        'third_news': third_news
+    }
+    
+    return news
