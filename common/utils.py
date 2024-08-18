@@ -458,7 +458,8 @@ def baruen_noun_tokenizer(s):
         다운로드 : https://bareun.ai/download
         Windows/MAC에서 바른형태소 분석기 활성화 : https://bareun.ai/docs
         - Window는 설치 후 환경변수 설정 및 윈도우 서비스 활성화 필요
-        - MAC은 설치 후 터미널에서 다음의 명령어 실행, sudo launchctl unload /Library/LaunchAgents/bareun.plist
+        - MAC은 설치 후 터미널에서 다음의 명령어 실행, sudo launchctl load /Library/LaunchAgents/bareun.plist
+        - 부팅 후 실행 안되면 재실행 명령어 실헹, sudo launchctl bootstrap gui/$(id -u) /Library/LaunchAgents/bareun.plist
     '''
     
     pos_list = ['NNG', 'NNP', 'NP']
@@ -468,7 +469,7 @@ def baruen_noun_tokenizer(s):
     return [token for token, tag in baruen_tagger.pos(s) if tag in pos_list]
     
 
-def get_related_news(query, display='3', start='1', sort='sim'):
+def get_related_news(query, display='3', start='1', sort='date'):
     '''
     네이버 뉴스 API를 활용하여 관련 뉴스를 가져오는 함수
     (참고: https://developers.naver.com/docs/serviceapi/search/news/news.md#%EB%89%B4%EC%8A%A4)
