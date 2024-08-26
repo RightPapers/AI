@@ -28,15 +28,15 @@ def model_inference(url, transformer=True):
     
     if transformer:
         model_checkpoint = 'klue/roberta-small'
-        model_path = 'transformer_ACC_0.9231.pth'
+        model_path = './models/transformer_ACC_0.9231.pth'
         text_config = AutoConfig.from_pretrained(model_checkpoint) # 모델 설정
         model = BD_Transformer(text_config) # 모델
-        model.load_state_dict(torch.load(model_path)) # 파라미터 덮어쓰기
+        model.load_state_dict(torch.load(model_path, map_location=device)) # 파라미터 덮어쓰기
     else:        
         model_checkpoint = 'klue/roberta-large'
-        model_path = 'roberta_ACC_0.9265.pth'
+        model_path = './models/roberta_ACC_0.9265.pth'
         model = BD_Roberta(model_checkpoint) # 모델
-        model.load_state_dict(torch.load(model_path)) # 파라미터 덮어쓰기
+        model.load_state_dict(torch.load(model_path, map_location=device)) # 파라미터 덮어쓰기
         
     model.to(device)
     
