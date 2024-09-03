@@ -438,7 +438,8 @@ def baruen_tokenizer(s):
         다운로드 : https://bareun.ai/download
         Windows/MAC에서 바른형태소 분석기 활성화 : https://bareun.ai/docs
         - Window는 설치 후 환경변수 설정 및 윈도우 서비스 활성화 필요
-        - MAC은 설치 후 터미널에서 다음의 명령어 실행, sudo launchctl unload /Library/LaunchAgents/bareun.plist
+        - MAC은 설치 후 터미널에서 다음의 명령어 실행, sudo launchctl load /Library/LaunchAgents/bareun.plist
+        - MAC은 부팅 후 실행 안되면 재실행 명령어 실헹, sudo launchctl bootstrap gui/$(id -u) /Library/LaunchAgents/bareun.plist
     '''
     
     pos_list = ['NNG', 'NNP', 'NP', 'VV', 'VA', 'MAG', 'MMA', 'MMD', 'MMN', 'XPN', 'XSN', 'XSV', 'XSA']
