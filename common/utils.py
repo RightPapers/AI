@@ -556,7 +556,10 @@ def related_articles(gpt_summary):
     first_line = gpt_summary.split('. ')[0]
     
     # 바른형태소 분석기를 활용한 명사 추출
-    query = baruen_noun_tokenizer(first_line)
+    #query = baruen_noun_tokenizer(first_line)
+    
+    # okt 형태소 분석기를 활용한 명사 추출
+    query = okt_noun_tokenizer(first_line)
     
     # 추출한 명사를 바탕으로 쿼리 생성
     query = ' '.join(query[:5])
