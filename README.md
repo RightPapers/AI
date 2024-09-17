@@ -17,7 +17,7 @@ AI 모델은 유튜브 영상의 자동생성자막을 입력받아, 해당 영�
 
 모델 학습에는 GCP의 L4 가상머신을 활용했습니다.
 
-### Transformer Encoder를 변형한 자체 제작 모델
+### - Transformer Encoder를 변형한 자체 제작 모델
 ![그림1](https://github.com/user-attachments/assets/dc04b8db-2ac5-4633-bbe1-9179daf4c768)
 - Transformer의 인코더 구조를 일부 변형하고, Feed Forward Network와 Classifier를 추가하여 이진분류를 수행합니다.
 - ```klue/roberta-small```을 체크포인트로 활용했습니다.
